@@ -1,5 +1,5 @@
 import React from 'react';
-import { formatNumbers } from '../../services/format-numbers';
+import {formatNumbers} from '../../../services/format-numbers'
 import classes from './CountryCard.module.scss';
 
 const Card = ({
@@ -13,12 +13,12 @@ const Card = ({
 }) => {
   const population = formatNumbers(populationData);
   const languages = (
-    languagesData ? Object.values(languagesData) : ['No data 😔']
+    languagesData ? Object.values(languagesData) : ['None']
   ).join(', ');
   const currencies = (
-    currenciesData ? Object.keys(currenciesData) : ['No data 😔']
+    currenciesData ? Object.keys(currenciesData) : ['None']
   ).join(', ');
-  const capitals = (capitalData ? capitalData : ['No data 😔']).join(', ');
+  const capitals = (capitalData ? capitalData : ['None']).join(', ');
 
   return (
     <article className={classes.country}>

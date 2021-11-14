@@ -5,12 +5,9 @@ const instance = axios.create({
   headers: { Accept: 'application/json' },
 });
 
-const buildPath = (...params) => `/${params.join('/')}`;
-
-export const getData = async (...params) => {
-  const builtPath = buildPath(...params);
+export const getData = async params => {
   try {
-    const res = await instance.get(builtPath);
+    const res = await instance.get(`/${params}`);
     return { data: res.data };
   } catch (err) {
     return { error: err.message };
