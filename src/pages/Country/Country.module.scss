@@ -1,0 +1,50 @@
+.hidden {
+  display: none;
+}
+
+.small-screens {
+  .country-details-container {
+    width: 95vw;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    img {
+      width: 65%;
+    }
+    h1 {
+      font-size: 3rem;
+      text-transform: uppercase;
+    }
+  }
+
+  .close-map-btn {
+    background-color: #f4f4f4;
+    color: #000;
+    outline: none;
+    border: none;
+    font-size: 17px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-family: inherit;
+    position: absolute;
+    bottom: 2rem;
+    left: 2rem;
+    border-radius: 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    &:hover {
+      filter: brightness(110%);
+      box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+        rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    }
+  }
+}
+
+@media screen and (min-width: 600px) {
+  .small-screens {
+    display: none;
+  }
+}

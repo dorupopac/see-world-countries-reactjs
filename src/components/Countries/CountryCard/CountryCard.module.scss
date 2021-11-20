@@ -6,10 +6,10 @@
   border-radius: 0.7rem;
   margin: 3rem 3rem;
   transition: all 0.2s ease-in-out;
+  cursor: pointer;
 
   &:hover {
     transform: scale(105%);
-    cursor: pointer;
   }
 
   .img {
@@ -24,7 +24,7 @@
   }
 
   .data {
-    padding: 2.2rem 2.8rem 2.2rem 2.8rem;
+    padding: 2.2rem 2.8rem;
 
     .name {
       font-size: 2.2rem;
@@ -53,5 +53,25 @@
       margin-right: 2rem;
       font-size: 2rem;
     }
+  }
+}
+
+@media screen and (max-width: 280px) {
+  .country {
+    width: 22rem;
+
+    .img {
+      width: 22rem;
+      height: 13rem;
+    }
+    .data {
+      padding: 2rem 2.5rem;
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .country {
+    margin: 1rem;
   }
 }

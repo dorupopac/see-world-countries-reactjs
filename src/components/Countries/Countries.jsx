@@ -75,7 +75,7 @@ const Countries = ({ activeRegion }) => {
     }, 200);
   };
 
-  if (loading) return <Spinner classes="spinner" />;
+  if (loading) return <Spinner className="spinner" />;
   if (error) return <h1>{error}</h1>;
 
   return (

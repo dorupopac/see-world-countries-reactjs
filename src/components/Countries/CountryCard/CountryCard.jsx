@@ -1,5 +1,6 @@
 import React from 'react';
-import {formatNumbers} from '../../../services/format-numbers'
+import { formatNumbers } from '../../../services/format-numbers';
+import { Link } from 'react-router-dom';
 import classes from './CountryCard.module.scss';
 
 const Card = ({
@@ -19,9 +20,10 @@ const Card = ({
     currenciesData ? Object.keys(currenciesData) : ['None']
   ).join(', ');
   const capitals = (capitalData ? capitalData : ['None']).join(', ');
+  const urlPath = name.split(' ').join('-');
 
   return (
-    <article className={classes.country}>
+    <Link to={`/country/${urlPath}`} className={classes.country}>
       <img className={classes.img} src={flag} alt="flag" />
       <div className={classes.data}>
         <h3 className={classes.name}>{name}</h3>
@@ -43,7 +45,7 @@ const Card = ({
           {currencies}
         </p>
       </div>
-    </article>
+    </Link>
   );
 };
 export default Card;
