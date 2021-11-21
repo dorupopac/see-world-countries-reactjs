@@ -1,7 +1,7 @@
 import React from 'react';
 import { formatNumbers } from '../../../services/format-numbers';
 import { Link } from 'react-router-dom';
-import classes from './CountryCard.module.scss';
+import classes from './SmallCountryCard.module.scss';
 
 const Card = ({
   name,
@@ -19,7 +19,7 @@ const Card = ({
   const currencies = (
     currenciesData ? Object.keys(currenciesData) : ['None']
   ).join(', ');
-  const capitals = (capitalData ? capitalData : ['None']).join(', ');
+  const capital = (capitalData ? capitalData : ['None']).join(', ');
   const urlPath = name.split(' ').join('-');
 
   return (
@@ -30,7 +30,7 @@ const Card = ({
         <h4 className={classes.region}>{region}</h4>
         <p className={classes.row}>
           <span>🏙️</span>
-          {capitals}
+          {capital}
         </p>
         <p className={classes.row}>
           <span>👫</span>

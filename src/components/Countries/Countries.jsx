@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import Card from './CountryCard/CountryCard';
+import SmallCountryCard from './SmallCountryCard/SmallCountryCard';
 import CardContainer from './CardContainer/CardContainer';
 import Spinner from '../Spinner/Spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
@@ -96,14 +96,14 @@ const Countries = ({ activeRegion }) => {
         >
           <CardContainer>
             {slicedCountries.map((country, i) => (
-              <Card key={country + i} {...country} />
+              <SmallCountryCard key={country + i} {...country} />
             ))}
           </CardContainer>
         </InfiniteScroll>
       ) : (
         <CardContainer>
           {countries.current.map((country, i) => (
-            <Card key={country + i} {...country} />
+            <SmallCountryCard key={country + i} {...country} />
           ))}
         </CardContainer>
       )}

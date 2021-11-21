@@ -1,25 +1,15 @@
 .hidden {
   display: none;
 }
-
 .small-screens {
-  .country-details-container {
-    width: 95vw;
-    margin: 2rem auto;
+  min-height: 100vh;
+  .country-card-container {
+    margin: 2rem 0;
+    padding: 0 1rem;
     display: flex;
-    flex-direction: column;
     align-items: center;
-
-
-    img {
-      width: 65%;
-    }
-    h1 {
-      font-size: 3rem;
-      text-transform: uppercase;
-    }
+    justify-content: center;
   }
-
   .close-map-btn {
     background-color: #f4f4f4;
     color: #000;
@@ -29,7 +19,7 @@
     padding: 0.5rem 1rem;
     cursor: pointer;
     font-family: inherit;
-    position: absolute;
+    position: fixed;
     bottom: 2rem;
     left: 2rem;
     border-radius: 10px;

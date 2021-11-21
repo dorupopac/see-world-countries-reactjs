@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import Regions from '../../components/Regions/Regions';
 import Countries from '../../components/Countries/Countries';
 
-const initRegion = sessionStorage.getItem('active-region') ?? 'all';
-
 const Home = () => {
+  const initRegion = sessionStorage.getItem('active-region') ?? 'all';
   const [activeRegion, setActiveRegion] = useState(initRegion);
 
   const activeRegionHandler = region => {
