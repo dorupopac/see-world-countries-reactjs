@@ -45,7 +45,6 @@ const Country = () => {
   }, [fetchCountryDetails]);
 
   const openMap = () => {
-    console.log('mapopen');
     setMapIsOpen(true);
   };
 
