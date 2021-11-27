@@ -3,7 +3,7 @@
 }
 .small-screens {
   min-height: 100vh;
-  .country-card-container {
+  &-country-card-container {
     margin: 2rem 0;
     padding: 0 1rem;
     display: flex;
@@ -22,6 +22,7 @@
     position: fixed;
     bottom: 2rem;
     left: 2rem;
+    z-index: 10;
     border-radius: 10px;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
       rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
@@ -32,9 +33,73 @@
     }
   }
 }
+.big-screens {
+  display: none;
+}
 
 @media screen and (min-width: 600px) {
+  .big-screens {
+    display: block;
+    &-country-card-container {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .close-map-btn {
+      background-color: #f4f4f4;
+      color: #000;
+      outline: none;
+      border: none;
+      font-size: 17px;
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      font-family: inherit;
+      position: fixed;
+      bottom: 2rem;
+      left: 2rem;
+      z-index: 10;
+      border-radius: 10px;
+      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+        rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+      &:hover {
+        filter: brightness(110%);
+        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+          rgba(0, 0, 0, 0.23) 0px 6px 6px;
+      }
+    }
+  }
   .small-screens {
     display: none;
+  }
+}
+#bigger-screen {
+  display: none;
+}
+
+@media screen and (min-width: 1500px) {
+  .big-screens {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    #bigger-screen {
+      display: flex;
+      height: 100vh;
+      max-height: 1000px;
+      overflow: hidden;
+      align-items: center;
+
+      div:first-child {
+        position: relative !important;
+      }
+    }
+  }
+  #big-screen {
+    display: none;
+  }
+  .hidden {
+    display: unset;
   }
 }

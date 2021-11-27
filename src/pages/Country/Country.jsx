@@ -56,22 +56,54 @@ const Country = () => {
   if (error) return <h1>{error}</h1>;
 
   return (
-    <div className={classes['small-screens']}>
-      <div className={mapIsOpen ? classes.hidden : ''}>
-        <div className={classes['country-card-container']}>
-          <BigCountryCard countryData={countryData} handleToggleMap={openMap} />
+    <>
+      <div className={classes['small-screens']}>
+        <div className={mapIsOpen ? classes.hidden : ''}>
+          <div className={classes['small-screens-country-card-container']}>
+            <BigCountryCard
+              countryData={countryData}
+              handleToggleMap={openMap}
+            />
+          </div>
+        </div>
+        <div className={mapIsOpen ? '' : classes.hidden}>
+          <MapComponent
+            style={{ width: '100vw', height: '100vh' }}
+            latlng={countryData.latlng}
+          />
+          <button onClick={closeMap} className={classes['close-map-btn']}>
+            Close Map
+          </button>
         </div>
       </div>
-      <div className={mapIsOpen ? '' : classes.hidden}>
-        <MapComponent
-          style={{ width: '100vw', height: '100vh' }}
-          latlng={countryData.latlng}
-        />
-        <button onClick={closeMap} className={classes['close-map-btn']}>
-          Close Map
-        </button>
+      <div className={classes['big-screens']}>
+        <div className={mapIsOpen ? classes.hidden : ''}>
+          <div className={classes['big-screens-country-card-container']}>
+            <BigCountryCard
+              countryData={countryData}
+              handleToggleMap={openMap}
+            />
+          </div>
+        </div>
+        <div className={mapIsOpen ? '' : classes.hidden}>
+          <div id={classes['big-screen']}>
+            <MapComponent
+              style={{ width: '100vw', height: '100vh' }}
+              latlng={countryData.latlng}
+            />
+            <button onClick={closeMap} className={classes['close-map-btn']}>
+              Close Map
+            </button>
+          </div>
+          <div id={classes['bigger-screen']}>
+            <MapComponent
+              style={{ width: '550px', height: '97vh', position: 'relative' }}
+              latlng={countryData.latlng}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 export default Country;
