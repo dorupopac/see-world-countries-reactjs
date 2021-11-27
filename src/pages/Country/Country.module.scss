@@ -85,12 +85,7 @@
       display: flex;
       height: 100vh;
       max-height: 1000px;
-      overflow: hidden;
       align-items: center;
-
-      div:first-child {
-        position: relative !important;
-      }
     }
   }
   #big-screen {

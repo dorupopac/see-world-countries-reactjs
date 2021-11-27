@@ -19,8 +19,12 @@ const Country = () => {
     setLoading(true);
     setError(null);
 
-    const country = pathname.substr(9).replaceAll('-', ' ');
-    const res = await getCountryData(`name/${country}?fullText=true`);
+    let country = pathname.substr(9).replaceAll('-', ' ');
+    let res = await getCountryData(`name/${country}?fullText=true`);
+    if (res.error) {
+      country = pathname.substr(9);
+      res = await getCountryData(`name/${country}?fullText=true`);
+    }
     if (res.data) {
       const countryData = {
         name: res.data[0].name?.official,
@@ -36,7 +40,7 @@ const Country = () => {
         subregion: res.data[0].subregion,
       };
       setCountryData(countryData);
-    } else if (res.error) setError("That country doesn't exist");
+    } else setError("That country doesn't exist");
     setLoading(false);
   }, [pathname]);
 
@@ -44,12 +48,8 @@ const Country = () => {
     fetchCountryDetails();
   }, [fetchCountryDetails]);
 
-  const openMap = () => {
-    setMapIsOpen(true);
-  };
-
-  const closeMap = () => {
-    setMapIsOpen(false);
+  const toggleMap = () => {
+    setMapIsOpen(prev => !prev);
   };
 
   if (loading) return <Spinner className="spinner" />;
@@ -63,7 +63,7 @@ const Country = () => {
             <HomeBtn />
             <BigCountryCard
               countryData={countryData}
-              handleToggleMap={openMap}
+              handleToggleMap={toggleMap}
             />
           </div>
         </div>
@@ -71,8 +71,9 @@ const Country = () => {
           <MapComponent
             style={{ width: '100vw', height: '100vh' }}
             latlng={countryData.latlng}
+            area={countryData.area}
           />
-          <button onClick={closeMap} className={classes['close-map-btn']}>
+          <button onClick={toggleMap} className={classes['close-map-btn']}>
             Close Map
           </button>
         </div>
@@ -83,7 +84,7 @@ const Country = () => {
             <HomeBtn />
             <BigCountryCard
               countryData={countryData}
-              handleToggleMap={openMap}
+              handleToggleMap={toggleMap}
             />
           </div>
         </div>
@@ -92,8 +93,9 @@ const Country = () => {
             <MapComponent
               style={{ width: '100vw', height: '100vh' }}
               latlng={countryData.latlng}
+              area={countryData.area}
             />
-            <button onClick={closeMap} className={classes['close-map-btn']}>
+            <button onClick={toggleMap} className={classes['close-map-btn']}>
               Close Map
             </button>
           </div>
@@ -101,6 +103,7 @@ const Country = () => {
             <MapComponent
               style={{ width: '550px', height: '97vh', maxHeight: '1000px' }}
               latlng={countryData.latlng}
+              area={countryData.area}
             />
           </div>
         </div>
