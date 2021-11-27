@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getData as getCountryData } from '../../services/api';
 import { useLocation } from 'react-router';
-
 import MapComponent from '../../components/MapComponent/MapComponent';
 import Spinner from '../../components/Spinner/Spinner';
+import BigCountryCard from '../../components/BigCountryCard/BigCountryCard';
+import HomeBtn from '../../components/HomeBtn/HomeBtn';
 
 import classes from './Country.module.scss';
-import BigCountryCard from '../../components/BigCountryCard/BigCountryCard';
 
 const Country = () => {
   const [loading, setLoading] = useState(true);
@@ -60,6 +60,7 @@ const Country = () => {
       <div className={classes['small-screens']}>
         <div className={mapIsOpen ? classes.hidden : ''}>
           <div className={classes['small-screens-country-card-container']}>
+            <HomeBtn />
             <BigCountryCard
               countryData={countryData}
               handleToggleMap={openMap}
@@ -79,6 +80,7 @@ const Country = () => {
       <div className={classes['big-screens']}>
         <div className={mapIsOpen ? classes.hidden : ''}>
           <div className={classes['big-screens-country-card-container']}>
+            <HomeBtn />
             <BigCountryCard
               countryData={countryData}
               handleToggleMap={openMap}
@@ -97,7 +99,7 @@ const Country = () => {
           </div>
           <div id={classes['bigger-screen']}>
             <MapComponent
-              style={{ width: '550px', height: '97vh', position: 'relative' }}
+              style={{ width: '550px', height: '97vh', maxHeight: '1000px' }}
               latlng={countryData.latlng}
             />
           </div>

@@ -6,9 +6,6 @@
   &-country-card-container {
     margin: 2rem 0;
     padding: 0 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   .close-map-btn {
     background-color: #f4f4f4;
@@ -92,7 +89,7 @@
       align-items: center;
 
       div:first-child {
-        position: relative !important;
+        position: unset !important;
       }
     }
   }
