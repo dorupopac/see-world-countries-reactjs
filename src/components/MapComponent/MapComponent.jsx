@@ -29,6 +29,11 @@ const MapComponent = ({ latlng, style, area }) => {
         stylers: [{ color: '#242f3e' }],
       },
       {
+        featureType: 'administrative.country',
+        elementType: 'geometry.stroke',
+        stylers: [{ color: '#f4f4f4' }],
+      },
+      {
         elementType: 'labels.text.fill',
         stylers: [{ color: '#746855' }],
       },
