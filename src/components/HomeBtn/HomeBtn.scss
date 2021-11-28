@@ -1,3 +1,5 @@
+@import '../../styles/css-variables.scss';
+
 .home-btn {
   display: inline-flex;
   flex-direction: row;
@@ -5,7 +7,7 @@
   cursor: pointer;
   font-size: 2rem;
   padding: 0.4rem;
-  color: #000;
+  color: var(--clr-main-text);
   text-transform: capitalize;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;

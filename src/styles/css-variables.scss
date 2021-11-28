@@ -1,0 +1,13 @@
+:root {
+  --clr-main-bg: #fff;
+  --clr-main-text: #555;
+  --clr-country-card-bg: #fff;
+  --clr-country-card-region: #888;
+}
+
+[data-theme='dark'] {
+  --clr-main-bg: #23272f;
+  --clr-main-text: #fff;
+  --clr-country-card-bg: #343a46;
+  --clr-country-card-region: #00b2b2;
+}
