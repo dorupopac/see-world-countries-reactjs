@@ -73,16 +73,26 @@ const Country = () => {
   return (
     <>
       <div className={classes['small-screens']}>
-        <div className={mapIsOpen ? classes.hidden : ''}>
-          <div className={classes['small-screens-country-card-container']}>
-            <HomeBtn />
-            <BigCountryCard
-              countryData={countryData}
-              handleToggleMap={toggleMap}
-            />
-          </div>
+        <div
+          className={
+            !mapIsOpen
+              ? `${classes['small-screens-country-card-container']} `
+              : `${classes['small-screens-country-card-container']} ${classes['small-screens-country-card-container-hide']}`
+          }
+        >
+          <HomeBtn />
+          <BigCountryCard
+            countryData={countryData}
+            handleToggleMap={toggleMap}
+          />
         </div>
-        <div className={mapIsOpen ? '' : classes.hidden}>
+        <div
+          className={
+            mapIsOpen
+              ? `${classes['slide-in-map']} ${classes['slide-in-map-show']}`
+              : `${classes['slide-in-map']}`
+          }
+        >
           <MapComponent
             style={{
               width: '100vw',
@@ -97,16 +107,26 @@ const Country = () => {
         </div>
       </div>
       <div className={classes['big-screens']}>
-        <div className={mapIsOpen ? classes.hidden : ''}>
-          <div className={classes['big-screens-country-card-container']}>
-            <HomeBtn />
-            <BigCountryCard
-              countryData={countryData}
-              handleToggleMap={toggleMap}
-            />
-          </div>
+        <div
+          className={
+            !mapIsOpen
+              ? `${classes['big-screens-country-card-container']} `
+              : `${classes['big-screens-country-card-container']} ${classes['big-screens-country-card-container-hide']}`
+          }
+        >
+          <HomeBtn />
+          <BigCountryCard
+            countryData={countryData}
+            handleToggleMap={toggleMap}
+          />
         </div>
-        <div className={mapIsOpen ? '' : classes.hidden}>
+        <div
+          className={
+            mapIsOpen
+              ? `${classes['slide-in-map']} ${classes['slide-in-map-show']}`
+              : `${classes['slide-in-map']}`
+          }
+        >
           <div id={classes['big-screen']}>
             <MapComponent
               style={{ width: '100vw', height: '100vh' }}
@@ -117,20 +137,20 @@ const Country = () => {
               Close Map
             </button>
           </div>
-          <div id={classes['bigger-screen']}>
-            <MapComponent
-              style={{
-                width: '550px',
-                height: '97vh',
-                maxHeight: '1000px',
-                boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
-                borderTopRightRadius: '0.7rem',
-                borderBottomRightRadius: '0.7rem',
-              }}
-              latlng={countryData.latlng}
-              area={countryData.area}
-            />
-          </div>
+        </div>
+        <div id={classes['bigger-screen']}>
+          <MapComponent
+            style={{
+              width: '550px',
+              height: '97vh',
+              maxHeight: '1000px',
+              boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+              borderTopRightRadius: '0.7rem',
+              borderBottomRightRadius: '0.7rem',
+            }}
+            latlng={countryData.latlng}
+            area={countryData.area}
+          />
         </div>
       </div>
     </>

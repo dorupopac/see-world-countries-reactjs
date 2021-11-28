@@ -3,34 +3,52 @@
   &-country-card-container {
     margin: 2rem 0;
     padding: 0 1rem;
-  }
-  .close-map-btn {
-    background-color: #f4f4f4;
-    color: #000;
-    outline: none;
-    border: none;
-    font-size: 17px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    font-family: inherit;
-    position: fixed;
-    bottom: 2rem;
-    left: 2rem;
-    z-index: 10;
-    border-radius: 10px;
-    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-      rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-    &:hover {
-      filter: brightness(110%);
-      box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
-        rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    transition: all 0.3s linear;
+    &-hide {
+      position: fixed;
+      right: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      transform: translate(125%);
     }
   }
 }
-.big-screens {
-  display: none;
+.slide-in-map {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s linear;
+  transform: translate(-125%);
+  &-show {
+    transform: translate(0);
+  }
 }
-.hidden {
+.close-map-btn {
+  background-color: #f4f4f4;
+  color: #000;
+  outline: none;
+  border: none;
+  font-size: 17px;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-family: inherit;
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  z-index: 10;
+  border-radius: 10px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  &:hover {
+    filter: brightness(110%);
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+      rgba(0, 0, 0, 0.23) 0px 6px 6px;
+  }
+}
+.big-screens {
   display: none;
 }
 
@@ -42,27 +60,13 @@
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .close-map-btn {
-      background-color: #f4f4f4;
-      color: #000;
-      outline: none;
-      border: none;
-      font-size: 17px;
-      padding: 0.5rem 1rem;
-      cursor: pointer;
-      font-family: inherit;
-      position: fixed;
-      bottom: 2rem;
-      left: 2rem;
-      z-index: 10;
-      border-radius: 10px;
-      box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-        rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
-      &:hover {
-        filter: brightness(110%);
-        box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px,
-          rgba(0, 0, 0, 0.23) 0px 6px 6px;
+      transition: all 0.3s linear;
+      &-hide {
+        position: fixed;
+        right: 0;
+        top: 0;
+        width: 100%;
+        transform: translate(125%);
       }
     }
   }
@@ -90,8 +94,5 @@
   }
   #big-screen {
     display: none;
-  }
-  .hidden {
-    display: unset;
   }
 }
