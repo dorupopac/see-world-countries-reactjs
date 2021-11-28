@@ -89,7 +89,7 @@ const Countries = ({ activeRegion }) => {
           hasMore={hasMore}
           loader={<Spinner />}
           endMessage={
-            <p style={{ textAlign: 'center' }}>
+            <p style={{ textAlign: 'center', paddingBottom: '2rem' }}>
               <b>Yay! You have seen it all</b>
             </p>
           }

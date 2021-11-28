@@ -1,3 +1,5 @@
+@import '../../../styles/colors';
+
 .country {
   background-color: #fff;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
@@ -5,8 +7,11 @@
   width: 25rem;
   border-radius: 0.7rem;
   margin: 3rem 3rem;
-  transition: all 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
   cursor: pointer;
+  &-dark {
+    background-color: $dark-card-bg;
+  }
 
   &:hover {
     transform: scale(105%);
@@ -36,6 +41,9 @@
       margin-bottom: 2.5rem;
       text-transform: uppercase;
       color: #888;
+      &-dark {
+        color: $dark-card-region;
+      }
     }
 
     .row {

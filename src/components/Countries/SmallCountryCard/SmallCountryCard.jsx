@@ -1,6 +1,7 @@
 import React from 'react';
 import { formatNumbers } from '../../../services/format-numbers';
 import { Link } from 'react-router-dom';
+import { useDarkmodeContext } from '../../../contexts/darkmode-context';
 import classes from './SmallCountryCard.module.scss';
 
 const Card = ({
@@ -12,6 +13,8 @@ const Card = ({
   population: populationData,
   flag,
 }) => {
+  const { theme } = useDarkmodeContext();
+
   const population = formatNumbers(populationData);
   const languages = (
     languagesData ? Object.values(languagesData) : ['None']
@@ -23,11 +26,22 @@ const Card = ({
   const urlPath = name.split(' ').join('-');
 
   return (
-    <Link to={`/country/${urlPath}`} className={classes.country}>
+    <Link
+      to={`/country/${urlPath}`}
+      className={
+        theme === 'light'
+          ? classes.country
+          : `${classes.country} ${classes['country-dark']}`
+      }
+    >
       <img className={classes.img} src={flag} alt="flag" />
       <div className={classes.data}>
         <h3 className={classes.name}>{name}</h3>
-        <h4 className={classes.region}>{region}</h4>
+        <h4 className={
+        theme === 'light'
+          ? classes.region
+          : `${classes.region} ${classes['region-dark']}`
+      }>{region}</h4>
         <p className={classes.row}>
           <span>🏙️</span>
           {capital}
