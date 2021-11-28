@@ -1,48 +1,23 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { getData } from '../../services/api';
+import React from 'react';
 import { formatNumbers } from '../../services/format-numbers';
 import { GrMap } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
 import classes from './BigCountryCard.module.scss';
 
 const BigCountryCard = ({ countryData, handleToggleMap }) => {
-  const [neighbours, setNeighbours] = useState([]);
-  const [neighboursLoading, setNeighboursLoading] = useState(true);
   const {
     name,
     currencies,
     capital,
     languages,
-    neighbours: neighboursCodes,
+    neighbours,
     area,
     population,
     timezones,
     flag,
     subregion,
   } = countryData;
-
-  const getNeighboursNames = useCallback(async () => {
-    setNeighboursLoading(true);
-    const res = await getData(`all`);
-    if (res.data) {
-      const filteredNeighbours = [];
-      neighboursCodes.forEach(code => {
-        filteredNeighbours.push(
-          res.data
-            .filter(country => country.cca3 === code)
-            .map(country => country.name.common)
-            .join('')
-        );
-      });
-      setNeighbours(filteredNeighbours);
-    }
-    setNeighboursLoading(false);
-  }, [neighboursCodes]);
-
-  useEffect(() => {
-    if (neighboursCodes) getNeighboursNames();
-  }, [getNeighboursNames, neighboursCodes]);
-
+  
   const getDataString = (data, extract) => {
     if (data && Array.isArray(data)) return data.join(', ');
     else if (data) return Object[extract](data).join(', ');
@@ -70,7 +45,7 @@ const BigCountryCard = ({ countryData, handleToggleMap }) => {
         return 'Timezone:';
       }
       case 'neighbour': {
-        if (getDataString(neighbours).includes(',') || !neighboursCodes)
+        if (getDataString(neighbours).includes(',') || neighbours.length === 0)
           return 'Neighbours:';
         return 'Neighbour:';
       }
@@ -100,35 +75,23 @@ const BigCountryCard = ({ countryData, handleToggleMap }) => {
         <h5>{getWordPlural('currency')}</h5>
         <p className={classes.row}>{getDataString(currencies, 'keys')}</p>
         <h5>{getWordPlural('neighbour')}</h5>
-
-        <>
-          {neighboursCodes ? (
-            <p className={classes.row}>
-              {!neighboursLoading
-                ? neighbours.map((neighbour, i) =>
-                    neighbour !== neighbours[neighbours.length - 1] ? (
-                      <Link
-                        key={neighbour + i}
-                        to={neighbour.split(' ').join('-')}
-                      >
-                        {`${neighbour}, `}
-                      </Link>
-                    ) : (
-                      <Link
-                        key={neighbour + i}
-                        to={neighbour.split(' ').join('-')}
-                      >
-                        {neighbour}
-                      </Link>
-                    )
-                  )
-                : '...'}
-            </p>
-          ) : (
-            <p className={classes.row}>None</p>
-          )}
-        </>
-
+        {neighbours.length > 0 ? (
+          <p className={classes.row}>
+            {neighbours.map((neighbour, i) =>
+              neighbour !== neighbours[neighbours.length - 1] ? (
+                <Link key={neighbour + i} to={neighbour.split(' ').join('-')}>
+                  {`${neighbour}, `}
+                </Link>
+              ) : (
+                <Link key={neighbour + i} to={neighbour.split(' ').join('-')}>
+                  {neighbour}
+                </Link>
+              )
+            )}
+          </p>
+        ) : (
+          <p className={classes.row}>None</p>
+        )}
         <h5>Total Area:</h5>
         <p className={classes.row}>{formatNumbers(area)} km²</p>
         <h5>{getWordPlural('timezone')}</h5>

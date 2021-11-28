@@ -26,18 +26,33 @@ const Country = () => {
       res = await getCountryData(`name/${country}?fullText=true`);
     }
     if (res.data) {
+      const [country] = res.data;
+      const neighbours = [];
+      if (country.borders) {
+        const allCountries = await getCountryData('all');
+        if (allCountries.data) {
+          country.borders.forEach(code => {
+            neighbours.push(
+              allCountries.data
+                .filter(country => country.cca3 === code)
+                .map(country => country.name.common)
+                .join('')
+            );
+          });
+        }
+      }
       const countryData = {
-        name: res.data[0].name?.official,
-        currencies: res.data[0].currencies,
-        capital: res.data[0].capital,
-        languages: res.data[0].languages,
-        neighbours: res.data[0].borders,
-        area: res.data[0].area,
-        latlng: res.data[0].latlng,
-        population: res.data[0].population,
-        timezones: res.data[0].timezones,
-        flag: res.data[0].flags?.svg,
-        subregion: res.data[0].subregion,
+        name: country.name?.official,
+        currencies: country.currencies,
+        capital: country.capital,
+        languages: country.languages,
+        neighbours: neighbours,
+        area: country.area,
+        latlng: country.latlng,
+        population: country.population,
+        timezones: country.timezones,
+        flag: country.flags?.svg,
+        subregion: country.subregion,
       };
       setCountryData(countryData);
     } else setError("That country doesn't exist");
@@ -69,7 +84,10 @@ const Country = () => {
         </div>
         <div className={mapIsOpen ? '' : classes.hidden}>
           <MapComponent
-            style={{ width: '100vw', height: '100vh' }}
+            style={{
+              width: '100vw',
+              height: '100vh',
+            }}
             latlng={countryData.latlng}
             area={countryData.area}
           />
@@ -101,7 +119,14 @@ const Country = () => {
           </div>
           <div id={classes['bigger-screen']}>
             <MapComponent
-              style={{ width: '550px', height: '97vh', maxHeight: '1000px' }}
+              style={{
+                width: '550px',
+                height: '97vh',
+                maxHeight: '1000px',
+                boxShadow: 'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+                borderTopRightRadius: '0.7rem',
+                borderBottomRightRadius: '0.7rem',
+              }}
               latlng={countryData.latlng}
               area={countryData.area}
             />

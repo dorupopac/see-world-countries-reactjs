@@ -68,7 +68,7 @@
         cursor: pointer;
         color: #c5b593;
         text-decoration: underline;
-        margin: 0 .4rem;
+        margin: 0 0.4rem;
         &:hover {
           color: #fff;
         }
@@ -83,7 +83,10 @@
     max-width: 85vw;
     height: 97vh;
     max-height: 1000px;
-    overflow-y: auto;
+    overflow-y: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
     .img {
       height: 200px;
       object-fit: cover;
@@ -112,7 +115,7 @@
   }
 }
 
-@media screen and (min-width: 1500px) {
+@media screen and (min-width: 1250px) {
   .country {
     border-top-right-radius: unset;
     border-bottom-right-radius: unset;

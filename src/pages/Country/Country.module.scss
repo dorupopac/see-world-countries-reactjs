@@ -1,6 +1,3 @@
-.hidden {
-  display: none;
-}
 .small-screens {
   min-height: 100vh;
   &-country-card-container {
@@ -31,6 +28,9 @@
   }
 }
 .big-screens {
+  display: none;
+}
+.hidden {
   display: none;
 }
 
@@ -69,12 +69,12 @@
   .small-screens {
     display: none;
   }
-}
-#bigger-screen {
-  display: none;
+  #bigger-screen {
+    display: none;
+  }
 }
 
-@media screen and (min-width: 1500px) {
+@media screen and (min-width: 1250px) {
   .big-screens {
     display: flex;
     flex-direction: row;
