@@ -7,17 +7,22 @@ import './ThemeToggler.scss';
 
 const ThemeToggler = () => {
   const { theme, setTheme } = useDarkmodeContext();
+
+  const themeChangeHandler = theme => {
+    setTheme(theme);
+  };
+
   return (
     <>
       {theme === 'dark' ? (
         <BsSun
           className="theme-toggler"
-          onClick={setTheme.bind(null, 'light')}
+          onClick={() => themeChangeHandler('light')}
         />
       ) : (
         <BsMoon
           className="theme-toggler"
-          onClick={setTheme.bind(null, 'dark')}
+          onClick={() => themeChangeHandler('dark')}
         />
       )}
     </>

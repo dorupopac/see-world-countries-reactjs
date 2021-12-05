@@ -1,0 +1,116 @@
+@import '../../styles/css-variables.scss';
+
+.header-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 0 1rem;
+}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  &-title {
+    display: flex;
+    align-items: center;
+
+    svg {
+      font-size: 5rem;
+    }
+  }
+}
+
+.btn-container {
+  display: none;
+  position: absolute;
+  background: var(--clr-country-card-bg);
+  z-index: 10;
+  &-open {
+    display: block;
+    width: auto;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  }
+  &-btn {
+    background: inherit;
+    border-color: transparent;
+    width: 100%;
+    font-size: 2rem;
+    text-transform: capitalize;
+    font-family: inherit;
+    padding: 0.375rem 0.75rem;
+    letter-spacing: 1px;
+    color: var(--clr-country-card-region);
+    cursor: pointer;
+    transition: all 0.2s linear;
+    user-select: none;
+    border-radius: 0.25rem;
+    &:hover {
+      filter: brightness(85%);
+    }
+  }
+}
+
+.active-region-btn {
+  background: var(--clr-country-card-region);
+  color: var(--clr-main-bg);
+}
+
+@media screen and (min-width: 700px) {
+  .header-wrapper {
+    margin: 2.5rem 0;
+    gap: 2rem;
+  }
+  .dropdown {
+    position: unset;
+    display: unset;
+    cursor: unset;
+    &-title {
+      display: none;
+    }
+  }
+  .btn-container {
+    display: flex;
+    position: unset;
+    background: unset;
+    justify-content: center;
+    flex-wrap: wrap;
+    &-open {
+      display: unset;
+      width: unset;
+      box-shadow: unset;
+    }
+    &-btn {
+      background: transparent;
+      width: unset;
+      font-size: 2.2rem;
+      margin: 0 0.5rem;
+      &:hover {
+        filter: unset;
+      }
+    }
+  }
+
+  .active-region-btn {
+    background: var(--clr-country-card-region);
+    color: var(--clr-main-bg);
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .header-wrapper {
+    .theme-toggler {
+      position: fixed;
+      top: 30px;
+      right: 30px;
+    }
+  }
+
+  .btn-container {
+    &-btn {
+      font-size: 2.5rem;
+    }
+  }
+}

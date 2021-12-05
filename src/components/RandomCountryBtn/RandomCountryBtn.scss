@@ -1,0 +1,17 @@
+@import '../../styles/css-variables.scss';
+
+#random-country-btn {
+  text-transform: uppercase;
+  font-size: 2rem;
+  padding: 0.375rem 0.75rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--clr-country-card-region);
+  background: var(--clr-main-bg);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  &:hover {
+    filter: brightness(90%);
+  }
+}

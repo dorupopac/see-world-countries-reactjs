@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Regions from '../../components/Regions/Regions';
 import Countries from '../../components/Countries/Countries';
+import { CountriesProvider } from '../../contexts/countries-context';
 
 const Home = () => {
   const initRegion = sessionStorage.getItem('active-region') ?? 'all';
@@ -16,13 +17,13 @@ const Home = () => {
   };
 
   return (
-    <>
+    <CountriesProvider>
       <Regions
         onRegionClick={activeRegionHandler}
         activeRegion={activeRegion}
       />
       <Countries activeRegion={activeRegion} />
-    </>
+    </CountriesProvider>
   );
 };
 export default Home;
