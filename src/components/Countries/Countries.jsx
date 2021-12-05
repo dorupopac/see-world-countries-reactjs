@@ -4,7 +4,7 @@ import CardContainer from './CardContainer/CardContainer';
 import Spinner from '../Spinner/Spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { getData as getCountries } from '../../services/api';
-import { shuffleArray } from '../../services/shuffle-array';
+import { shuffleArray } from '../../services/helpers';
 
 const Countries = ({ activeRegion }) => {
   const [slicedCountries, setSlicedCountries] = useState([]);

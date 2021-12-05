@@ -1,7 +1,8 @@
 import React from 'react';
-import { formatNumbers } from '../../services/format-numbers';
+import { formatNumbers } from '../../services/helpers';
 import { GrMap } from 'react-icons/gr';
 import { Link } from 'react-router-dom';
+import { getDataString } from '../../services/helpers';
 import classes from './BigCountryCard.module.scss';
 
 const BigCountryCard = ({ countryData, handleToggleMap }) => {
@@ -17,43 +18,33 @@ const BigCountryCard = ({ countryData, handleToggleMap }) => {
     flag,
     subregion,
   } = countryData;
-  
-  const getDataString = (data, extract) => {
-    if (data && Array.isArray(data)) return data.join(', ');
-    else if (data) return Object[extract](data).join(', ');
-    else return 'None';
-  };
 
   const getWordPlural = word => {
     switch (word.toLowerCase()) {
-      case 'capital': {
+      case 'capital':
         if (getDataString(capital).includes(',')) return 'Capitals:';
         return 'Capital:';
-      }
-      case 'currency': {
+      case 'currency':
         if (getDataString(currencies, 'keys').includes(','))
           return 'Currencies:';
         return 'Currency:';
-      }
-      case 'language': {
+      case 'language':
         if (getDataString(languages, 'values').includes(','))
           return 'Languages:';
         return 'Language:';
-      }
-      case 'timezone': {
+      case 'timezone':
         if (getDataString(timezones).includes(',')) return 'Timezones:';
         return 'Timezone:';
-      }
-      case 'neighbour': {
+      case 'neighbour':
         if (getDataString(neighbours).includes(',') || neighbours.length === 0)
           return 'Neighbours:';
         return 'Neighbour:';
-      }
-      default: {
+      default:
         return;
-      }
     }
   };
+
+  const urlPath = name.split(' ').join('-');
 
   return (
     <article className={classes.country}>
@@ -77,17 +68,13 @@ const BigCountryCard = ({ countryData, handleToggleMap }) => {
         <h5>{getWordPlural('neighbour')}</h5>
         {neighbours.length > 0 ? (
           <p className={classes.row}>
-            {neighbours.map((neighbour, i) =>
-              neighbour !== neighbours[neighbours.length - 1] ? (
-                <Link key={neighbour + i} to={neighbour.split(' ').join('-')}>
-                  {`${neighbour}, `}
-                </Link>
-              ) : (
-                <Link key={neighbour + i} to={neighbour.split(' ').join('-')}>
-                  {neighbour}
-                </Link>
-              )
-            )}
+            {neighbours.map((neighbour, i) => (
+              <Link key={neighbour + i} to={urlPath}>
+                {neighbour !== neighbours[neighbours.length - 1]
+                  ? `${neighbour}, `
+                  : neighbour}
+              </Link>
+            ))}
           </p>
         ) : (
           <p className={classes.row}>None</p>
