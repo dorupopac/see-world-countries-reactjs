@@ -7,7 +7,7 @@ const MapComponent = ({ latlng, style, area }) => {
   const [lat, lng] = latlng;
   const { isLoaded } = useJsApiLoader({
     id: 'google-map-script',
-    googleMapsApiKey: 'AIzaSyBgGJ-O4sAC74SjxPOa9u4MlAu52ogabdg',
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_KEY,
   });
 
   let zoom = 0;
