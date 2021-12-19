@@ -1,28 +1,15 @@
 import React from 'react';
 import Home from './pages/Home/Home';
 import Country from './pages/Country/Country';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 const App = () => {
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route exact path="/country/:name">
-          <Country />
-        </Route>
-        <Route path="*">
-          <Redirect to="/" />
-        </Route>
-      </Switch>
-    </Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/country/:name" element={<Country />} />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
   );
 };
 

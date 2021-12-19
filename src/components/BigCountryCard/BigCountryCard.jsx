@@ -44,8 +44,6 @@ const BigCountryCard = ({ countryData, handleToggleMap }) => {
     }
   };
 
-  const urlPath = name.split(' ').join('-');
-
   return (
     <article className={classes.country}>
       <img className={classes.img} src={flag} alt="flag" />
@@ -68,13 +66,16 @@ const BigCountryCard = ({ countryData, handleToggleMap }) => {
         <h5>{getWordPlural('neighbour')}</h5>
         {neighbours.length > 0 ? (
           <p className={classes.row}>
-            {neighbours.map((neighbour, i) => (
-              <Link key={neighbour + i} to={urlPath}>
-                {neighbour !== neighbours[neighbours.length - 1]
-                  ? `${neighbour}, `
-                  : neighbour}
-              </Link>
-            ))}
+            {neighbours.map((neighbour, i) => {
+              const urlPath = neighbour.split(' ').join('-');
+              return (
+                <Link key={neighbour + i} to={`./../${urlPath}`}>
+                  {neighbour !== neighbours[neighbours.length - 1]
+                    ? `${neighbour}, `
+                    : neighbour}
+                </Link>
+              );
+            })}
           </p>
         ) : (
           <p className={classes.row}>None</p>

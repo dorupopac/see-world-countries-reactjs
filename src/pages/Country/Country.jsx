@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { getData as getCountryData } from '../../services/api';
-import { useLocation } from 'react-router';
+import { useParams } from 'react-router';
 import MapComponent from '../../components/MapComponent/MapComponent';
 import Spinner from '../../components/Spinner/Spinner';
 import BigCountryCard from '../../components/BigCountryCard/BigCountryCard';
@@ -13,16 +13,16 @@ const Country = () => {
   const [error, setError] = useState(null);
   const [countryData, setCountryData] = useState({});
   const [mapIsOpen, setMapIsOpen] = useState(false);
-  const { pathname } = useLocation();
+  const { name } = useParams();
 
   const fetchCountryDetails = useCallback(async () => {
     setLoading(true);
     setError(null);
 
-    let country = pathname.substr(9).replaceAll('-', ' ');
+    let country = name.replaceAll('-', ' ');
     let res = await getCountryData(`name/${country}?fullText=true`);
     if (res.error) {
-      country = pathname.substr(9);
+      country = name;
       res = await getCountryData(`name/${country}?fullText=true`);
     }
     if (res.data) {
@@ -57,7 +57,7 @@ const Country = () => {
       setCountryData(countryData);
     } else setError("That country doesn't exist");
     setLoading(false);
-  }, [pathname]);
+  }, [name]);
 
   useEffect(() => {
     fetchCountryDetails();
