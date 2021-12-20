@@ -1,67 +1,36 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { getData as getCountryData } from '../../services/api';
 import { useParams } from 'react-router';
 import MapComponent from '../../components/MapComponent/MapComponent';
 import Spinner from '../../components/Spinner/Spinner';
 import BigCountryCard from '../../components/BigCountryCard/BigCountryCard';
 import HomeBtn from '../../components/HomeBtn/HomeBtn';
+import { useCountriesContext } from '../../contexts/countries-context';
 
 import classes from './Country.module.scss';
 
 const Country = () => {
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
   const [countryData, setCountryData] = useState({});
   const [mapIsOpen, setMapIsOpen] = useState(false);
+  const { countries, loading, error, setError } = useCountriesContext();
   const { name } = useParams();
 
-  const fetchCountryDetails = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
-    let country = name.replaceAll('-', ' ');
-    let res = await getCountryData(`name/${country}?fullText=true`);
-    if (res.error) {
-      country = name;
-      res = await getCountryData(`name/${country}?fullText=true`);
+  const getCountryData = useCallback(() => {
+    const countryName = name.replaceAll('-', ' ');
+    let countryObj = countries.find(
+      countryObj => countryObj.name.toLowerCase() === countryName.toLowerCase()
+    );
+    if (!countryObj) {
+      countryObj = countries.find(
+        countryObj => countryObj.name.toLowerCase() === name.toLowerCase()
+      );
     }
-    if (res.data) {
-      const [country] = res.data;
-      const neighbours = [];
-      if (country.borders) {
-        const allCountries = await getCountryData('all');
-        if (allCountries.data) {
-          country.borders.forEach(code => {
-            neighbours.push(
-              allCountries.data
-                .filter(country => country.cca3 === code)
-                .map(country => country.name.common)
-                .join('')
-            );
-          });
-        }
-      }
-      const countryData = {
-        name: country.name?.official,
-        currencies: country.currencies,
-        capital: country.capital,
-        languages: country.languages,
-        neighbours: neighbours,
-        area: country.area,
-        latlng: country.latlng,
-        population: country.population,
-        timezones: country.timezones,
-        flag: country.flags?.svg,
-        subregion: country.subregion,
-      };
-      setCountryData(countryData);
-    } else setError("That country doesn't exist");
-    setLoading(false);
-  }, [name]);
+    if (!countryObj) setError("That country doesn't exist!");
+    setCountryData(countryObj);
+  }, [name, countries, setError]);
 
   useEffect(() => {
-    fetchCountryDetails();
-  }, [fetchCountryDetails]);
+    getCountryData();
+  }, [getCountryData]);
 
   const toggleMap = () => {
     setMapIsOpen(prev => !prev);
@@ -69,6 +38,7 @@ const Country = () => {
 
   if (loading) return <Spinner className="spinner" />;
   if (error) return <h1>{error}</h1>;
+  if (!Object.keys(countryData).length) return null;
 
   return (
     <>

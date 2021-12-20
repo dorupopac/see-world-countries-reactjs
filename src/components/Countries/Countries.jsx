@@ -4,72 +4,66 @@ import CardContainer from './CardContainer/CardContainer';
 import Spinner from '../Spinner/Spinner';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCountriesContext } from '../../contexts/countries-context';
-import { getData as getCountries } from '../../services/api';
 import { shuffleArray } from '../../services/helpers';
 
 const Countries = ({ activeRegion }) => {
+  const [filteredCountries, setFilteredCountries] = useState([]);
   const [slicedCountries, setSlicedCountries] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { countries, loading, error } = useCountriesContext();
   const [hasMore, setHasMore] = useState(true);
-  const { countries, setCountries } = useCountriesContext();
   const range = useRef({ min: 0, max: 15 });
   const wasFullyLoadedBefore = sessionStorage.getItem(activeRegion);
 
-  const fetchCountries = useCallback(async () => {
-    setLoading(true);
-    setError(null);
+  const getCountries = useCallback(async () => {
+    const region = activeRegion.split('/')[1] || activeRegion;
 
-    const res = await getCountries(activeRegion);
-    if (res.data) {
-      shuffleArray(res.data);
-      const countriesData = res.data.map(country => ({
-        name: country.name.common,
-        currencies: country.currencies,
-        capital: country.capital,
-        region: country.region,
-        languages: country.languages,
-        population: country.population,
-        flag: country.flags.svg,
-      }));
-      setCountries(countriesData);
-      setSlicedCountries(
-        countriesData.slice(range.current.min, range.current.max)
+    let filteredCountriesByRegion = [...countries];
+    if (region !== 'all') {
+      filteredCountriesByRegion = countries.filter(
+        countryObj => countryObj.region.toLowerCase() === region.toLowerCase()
       );
+    }
+    setFilteredCountries(filteredCountriesByRegion);
 
-      if (wasFullyLoadedBefore) {
-        setCountries([
-          ...JSON.parse(sessionStorage.getItem(`${activeRegion}-cards-order`)),
-        ]);
-      }
-    } else if (res.error) setError(res.error);
-    setLoading(false);
-  }, [activeRegion, wasFullyLoadedBefore, setCountries]);
+    if (!wasFullyLoadedBefore) {
+      shuffleArray(filteredCountriesByRegion);
+      setSlicedCountries(
+        filteredCountriesByRegion.slice(range.current.min, range.current.max)
+      );
+    }
+
+    if (wasFullyLoadedBefore) {
+      setFilteredCountries([
+        ...JSON.parse(sessionStorage.getItem(`${activeRegion}-cards-order`)),
+      ]);
+    }
+  }, [activeRegion, wasFullyLoadedBefore, countries]);
 
   useEffect(() => {
     range.current.min = 0;
     range.current.max = 15;
     setHasMore(true);
-    fetchCountries();
-  }, [activeRegion, fetchCountries]);
+    getCountries();
+  }, [activeRegion, getCountries]);
 
   const sliceCountries = () => {
     range.current.min += 15;
     range.current.max += 15;
-    if (!countries[range.current.min]) {
+    if (!filteredCountries[range.current.min]) {
       setHasMore(false);
       sessionStorage.setItem(activeRegion, 'loaded');
 
       sessionStorage.setItem(
         `${activeRegion}-cards-order`,
-        JSON.stringify(countries)
+        JSON.stringify(filteredCountries)
       );
-
       return;
     }
     setTimeout(() => {
       setSlicedCountries(prev =>
-        prev.concat(countries.slice(range.current.min, range.current.max))
+        prev.concat(
+          filteredCountries.slice(range.current.min, range.current.max)
+        )
       );
     }, 200);
   };
@@ -101,7 +95,7 @@ const Countries = ({ activeRegion }) => {
         </InfiniteScroll>
       ) : (
         <CardContainer>
-          {countries.map((country, i) => (
+          {filteredCountries.map((country, i) => (
             <SmallCountryCard key={country + i} {...country} />
           ))}
         </CardContainer>
