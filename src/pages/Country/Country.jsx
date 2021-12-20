@@ -11,11 +11,14 @@ import classes from './Country.module.scss';
 const Country = () => {
   const [countryData, setCountryData] = useState({});
   const [mapIsOpen, setMapIsOpen] = useState(false);
-  const { countries, loading, error, setError } = useCountriesContext();
+  const [error, setError] = useState(null);
+  const { countries, loading } = useCountriesContext();
   const { name } = useParams();
 
   const getCountryData = useCallback(() => {
+    setError(null);
     const countryName = name.replaceAll('-', ' ');
+
     let countryObj = countries.find(
       countryObj => countryObj.name.toLowerCase() === countryName.toLowerCase()
     );
@@ -24,9 +27,13 @@ const Country = () => {
         countryObj => countryObj.name.toLowerCase() === name.toLowerCase()
       );
     }
-    if (!countryObj) setError("That country doesn't exist!");
+
     setCountryData(countryObj);
-  }, [name, countries, setError]);
+
+    if (!countryObj) {
+      setError("That country doesn't exist!");
+    }
+  }, [name, countries]);
 
   useEffect(() => {
     getCountryData();
@@ -36,9 +43,9 @@ const Country = () => {
     setMapIsOpen(prev => !prev);
   };
 
-  if (loading) return <Spinner className="spinner" />;
+  if (loading || !countryData?.name) return <Spinner className="spinner" />;
+
   if (error) return <h1>{error}</h1>;
-  if (!Object.keys(countryData).length) return null;
 
   return (
     <>

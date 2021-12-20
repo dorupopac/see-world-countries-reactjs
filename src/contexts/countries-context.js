@@ -1,23 +1,32 @@
-import React, { useState, useContext, useCallback, useEffect } from 'react';
+import React, { useContext, useCallback, useEffect, useReducer } from 'react';
 import { getData as getCountries } from '../services/api';
 
-const CountriesContext = React.createContext({
+const CountriesContext = React.createContext(null);
+
+const initialState = {
   countries: [],
   loading: true,
   error: null,
-  setError: () => {},
-  fetchCountries: () => {},
-});
+};
+
+const countriesReducer = (state, action) => {
+  switch (action.type) {
+    case 'SEND':
+      return { countries: [], loading: true, error: null };
+    case 'SUCCESS':
+      return { countries: action.data, loading: false, error: null };
+    case 'ERROR':
+      return { countries: [], loading: false, error: action.error };
+    default:
+      return state;
+  }
+};
 
 const CountriesProvider = ({ children }) => {
-  const [countries, setCountries] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [countriesState, dispatch] = useReducer(countriesReducer, initialState);
 
   const fetchCountries = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-
+    dispatch({ type: 'SEND' });
     const countries = await getCountries('all');
     if (countries.data) {
       const countriesData = countries.data.map(countryObj => {
@@ -61,24 +70,17 @@ const CountriesProvider = ({ children }) => {
           region,
         };
       });
-      setCountries(countriesData);
-    } else if (countries.error) setError(countries.error);
-    setLoading(false);
+      dispatch({ type: 'SUCCESS', data: countriesData });
+    } else if (countries.error)
+      dispatch({ type: 'ERROR', error: countries.error });
   }, []);
 
   useEffect(() => {
     fetchCountries();
   }, [fetchCountries]);
 
-  const contextValues = {
-    countries,
-    loading,
-    error,
-    setError,
-  };
-
   return (
-    <CountriesContext.Provider value={contextValues}>
+    <CountriesContext.Provider value={countriesState}>
       {children}
     </CountriesContext.Provider>
   );
