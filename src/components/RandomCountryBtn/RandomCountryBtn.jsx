@@ -4,23 +4,29 @@ import { useNavigate } from 'react-router';
 
 import './RandomCountryBtn.scss';
 
-const RandomCountryBtn = () => {
+const RandomCountryBtn = ({ activeRegion }) => {
   const { countries } = useCountriesContext();
   const navigate = useNavigate();
 
   const takeToRandomCountryHandler = () => {
-    if (countries.length === 0) return;
-    const randomNumber = Math.floor(Math.random() * countries.length);
-    const urlPath = countries[randomNumber].name.split(' ').join('-');
+    let filteredCountriesByRegion = countries.filter(
+      countryObj =>
+        countryObj.region.toLowerCase() === activeRegion.toLowerCase()
+    );
+    if (activeRegion === 'all') {
+      filteredCountriesByRegion = [...countries];
+    }
+    const randomNumber = Math.floor(
+      Math.random() * filteredCountriesByRegion.length
+    );
+    const urlPath = filteredCountriesByRegion[randomNumber].name
+      .split(' ')
+      .join('-');
     navigate(`/country/${urlPath}`);
   };
 
   return (
-    <button
-      id="random-country-btn"
-      disabled={countries.length === 0}
-      onClick={takeToRandomCountryHandler}
-    >
+    <button id="random-country-btn" onClick={takeToRandomCountryHandler}>
       random
     </button>
   );

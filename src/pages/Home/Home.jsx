@@ -3,15 +3,12 @@ import Regions from '../../components/Regions/Regions';
 import Countries from '../../components/Countries/Countries';
 
 const Home = () => {
-  const initRegion = sessionStorage.getItem('active-region') ?? 'all';
-  const [activeRegion, setActiveRegion] = useState(initRegion);
+  const [activeRegion, setActiveRegion] = useState(
+    sessionStorage.getItem('active-region') ?? 'all'
+  );
 
   const activeRegionHandler = region => {
-    if (region === 'all') {
-      setActiveRegion(region);
-    } else {
-      setActiveRegion(region);
-    }
+    setActiveRegion(region);
     sessionStorage.setItem('active-region', region);
   };
 

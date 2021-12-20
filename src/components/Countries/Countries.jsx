@@ -15,13 +15,12 @@ const Countries = ({ activeRegion }) => {
   const wasFullyLoadedBefore = sessionStorage.getItem(activeRegion);
 
   const getCountries = useCallback(async () => {
-    const region = activeRegion.split('/')[1] || activeRegion;
-
-    let filteredCountriesByRegion = [...countries];
-    if (region !== 'all') {
-      filteredCountriesByRegion = countries.filter(
-        countryObj => countryObj.region.toLowerCase() === region.toLowerCase()
-      );
+    let filteredCountriesByRegion = countries.filter(
+      countryObj =>
+        countryObj.region.toLowerCase() === activeRegion.toLowerCase()
+    );
+    if (activeRegion === 'all') {
+      filteredCountriesByRegion = [...countries];
     }
     setFilteredCountries(filteredCountriesByRegion);
 

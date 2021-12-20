@@ -5,14 +5,7 @@ import RandomCountryBtn from '../RandomCountryBtn/RandomCountryBtn';
 
 import './Regions.scss';
 
-const regionsArr = [
-  'all',
-  'region/africa',
-  'region/americas',
-  'region/asia',
-  'region/europe',
-  'region/oceania',
-];
+const regionsArr = ['all', 'africa', 'americas', 'asia', 'europe', 'oceania'];
 
 const Regions = ({ onRegionClick, activeRegion }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,7 +30,6 @@ const Regions = ({ onRegionClick, activeRegion }) => {
     setIsOpen(prev => !prev);
   };
 
-  const currentRegion = activeRegion.split('/')[1] ?? activeRegion;
   const dropdownClasses = isOpen
     ? 'btn-container btn-container-open'
     : 'btn-container';
@@ -47,13 +39,12 @@ const Regions = ({ onRegionClick, activeRegion }) => {
       <div className="dropdown" ref={dropdownRef} onClick={toggleDropdown}>
         <div className="dropdown-title">
           <button type="button" className="btn-container-btn active-region-btn">
-            {currentRegion}
+            {activeRegion}
           </button>
           {!isOpen ? <RiArrowDropDownFill /> : <RiArrowDropUpFill />}
         </div>
         <div className={dropdownClasses}>
           {regionsArr.map((region, i) => {
-            const regionName = region.split('/')[1] ?? region;
             let btnClasses = 'btn-container-btn';
             if (activeRegion === region)
               btnClasses = 'active-region-btn btn-container-btn';
@@ -66,13 +57,13 @@ const Regions = ({ onRegionClick, activeRegion }) => {
                   onRegionClick(region);
                 }}
               >
-                {regionName}
+                {region}
               </button>
             );
           })}
         </div>
       </div>
-      <RandomCountryBtn />
+      <RandomCountryBtn activeRegion={activeRegion} />
       <ThemeToggler />
     </div>
   );
