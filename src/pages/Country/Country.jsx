@@ -5,15 +5,17 @@ import Spinner from '../../components/Spinner/Spinner';
 import BigCountryCard from '../../components/BigCountryCard/BigCountryCard';
 import HomeBtn from '../../components/HomeBtn/HomeBtn';
 import { useCountriesContext } from '../../contexts/countries-context';
+import { useNavigate } from 'react-router-dom';
 
 import classes from './Country.module.scss';
 
 const Country = () => {
-  const [countryData, setCountryData] = useState({});
+  const [countryData, setCountryData] = useState(null);
   const [mapIsOpen, setMapIsOpen] = useState(false);
   const [error, setError] = useState(null);
   const { countries, loading } = useCountriesContext();
   const { name } = useParams();
+  const navigate = useNavigate();
 
   const getCountryData = useCallback(() => {
     setError(null);
@@ -27,25 +29,34 @@ const Country = () => {
         countryObj => countryObj.name.toLowerCase() === name.toLowerCase()
       );
     }
-
-    setCountryData(countryObj);
-
     if (!countryObj) {
       setError("That country doesn't exist!");
     }
+
+    setCountryData(countryObj);
   }, [name, countries]);
 
   useEffect(() => {
     getCountryData();
   }, [getCountryData]);
 
+  useEffect(() => {
+    let timeout;
+    if (error) {
+      timeout = setTimeout(() => {
+        navigate('/home');
+      }, 4000);
+    }
+    return () => clearTimeout(timeout);
+  }, [error, navigate]);
+
   const toggleMap = () => {
     setMapIsOpen(prev => !prev);
   };
 
-  if (loading || !countryData?.name) return <Spinner className="spinner" />;
-
+  if (loading) return <Spinner className="spinner" />;
   if (error) return <h1>{error}</h1>;
+  if (!countryData) return <Spinner className="spinner" />;
 
   return (
     <>
